@@ -1,0 +1,21 @@
+{
+  "name": "naval-war",
+  "version": "1.0.0",
+  "description": "A naval war game",
+  "main": "main.js",
+  "scripts": {
+    "dev:vite": "cd ./app && npm run dev && cd ..",
+    "dev:electron": "electron .",
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "build": "cd ./app && npm run build && cd ..",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^25.3.0"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
