@@ -37,7 +37,7 @@ export default function MainPages() {
   }, [socket]);
 
   return (
-    <div className="bg-slate-800 w-screen h-screen text-gray-200 flex flex-col p-2 items-center text-center justify-center">
+    <div className="bg-slate-800 -w-screen max-w-screen min-h-screen text-gray-200 flex flex-col px-2 py-3 items-center text-center justify-center select-none">
       {!isInLobby && !isInMatch &&
         <LoginPage />
       }

@@ -3,6 +3,7 @@ import {MatchContext} from '../Contexts/MatchContext';
 import {useEffect, useState, useContext} from 'react';
 import {getAllCoordinates, getCoordinates} from '../Utils/Coordinates';
 import {colorByBoatType, capitalizeFirstLetter} from "../Utils/Divers";
+import {tableHeader} from "../Utils/Table.jsx";
 
 function checkShipSize(startX, startY, endX, endY, size) {
   if (startX === endX) {
@@ -32,10 +33,10 @@ export default function PositionPhaseView() {
   const {setUserShips} = useContext(MatchContext);
   const [tempPlacement, setTempPlacement] = useState([
     {ship: 'carrier', startX: 1, startY: 1, endX: 1, endY: 5},
-    {ship: 'battleship', startX: 1, startY: 6, endX: 1, endY: 9},
-    {ship: 'cruiser', startX: 1, startY: 10, endX: 3, endY: 10},
-    {ship: 'submarine', startX: 5, startY: 1, endX: 5, endY: 3},
-    {ship: 'destroyer', startX: 5, startY: 5, endX: 5, endY: 6},
+    {ship: 'battleship', startX: 3, startY: 1, endX: 3, endY: 4},
+    {ship: 'cruiser', startX: 5, startY: 1, endX: 7, endY: 1},
+    {ship: 'submarine', startX: 7, startY: 3, endX: 7, endY: 5},
+    {ship: 'destroyer', startX: 9, startY: 1, endX: 10, endY: 1},
   ]);
   const [placementError, setPlacementError] = useState([]);
   const [placementErrorDisplayed, setPlacementErrorDisplayed] = useState([]);
@@ -44,9 +45,6 @@ export default function PositionPhaseView() {
   const [boatValid, setBoatValid] = useState([]);
   const [placementDone, setPlacementDone] = useState(false);
   const [mousePosition, setMousePosition] = useState({x: 0, y: 0});
-
-
-
 
   useEffect(() => {
     if (socket !== null) {
@@ -250,7 +248,7 @@ export default function PositionPhaseView() {
     <div className="w-full h-full flex flex-col items-center justify-center">
       {placementErrorDisplayed.length > 0 && (
         <div
-          className="absolute border-2 h-fit top-0 left-0 border-red-500 rounded-xl bg-red-300/75 p-2 text-red-700"
+          className="absolute border h-fit top-0 left-0 border-red-500 rounded-xl bg-red-300/75 p-2 text-red-700"
           style={{top: mousePosition.y, left: mousePosition.x + 20}}
         >
           {placementErrorDisplayed.length > 0 && (
@@ -261,8 +259,8 @@ export default function PositionPhaseView() {
         </div>
       )}
       <h1 className="text-2xl">Positionnement des bateaux</h1>
-      <div className="w-full h-full flex flex-row items-center justify-center gap-4">
-        <div id='boat-placement' className="w-1/2 h-full flex flex-col items-center justify-center gap-2">
+      <div className="w-full h-full flex lg:flex-row flex-col items-center justify-center gap-4">
+        <div id='boat-placement' className="lg:w-1/2 w-full h-full flex flex-col items-center justify-center gap-2">
           {boatList.map((boat) => (
             <div
               key={boat.name}
@@ -276,7 +274,7 @@ export default function PositionPhaseView() {
                 setPlacementErrorDisplayed([]);
               }}
             >
-              <div className="flex flex-col gap-2 w-1/5">
+              <div className="flex flex-col gap-2 lg:w-1/5 md:w-2/5 w-1/5">
                 <p className="h-fit">{capitalizeFirstLetter(boat.name)}</p>
                 <div className="flex flex-row gap-2 px-1 w-full justify-center">
                   {Array(boat.size).fill().map((_, i) => (
@@ -284,7 +282,7 @@ export default function PositionPhaseView() {
                   ))}
                 </div>
               </div>
-              <form className="flex flex-row justify-around w-4/5" onSubmit={handleTempPlacement}>
+              <form className="flex flex-row justify-around lg:w-4/5 md:w-3/5 w-4/5" onSubmit={handleTempPlacement}>
                 <div className="p-1 flex flex-row gap-2">
                   <label htmlFor="start" className="pr-1 text-orange-400">Début</label>
                   <input
@@ -312,7 +310,7 @@ export default function PositionPhaseView() {
               </form>
             </div>
           ))}
-          <div className="flex flex-row w-2/3 justify-around">
+          <div className="flex flex-row lg:w-2/3 w-full justify-around">
             <button
               type="button"
               className="py-2 px-4 bg-red-500 hover:bg-teal-700 rounded-md"
@@ -344,24 +342,10 @@ export default function PositionPhaseView() {
             )}
           </div>
         </div>
-        <div id='placement-visualisation' className="w-1/2 h-full flex flex-col items-center justify-center">
+        <div id='placement-visualisation' className="lg:w-1/2 w-full h-full flex flex-col items-center justify-center">
           <div className="flex flex-row gap-2">
             <table className="table-auto divide-y divide-orange-400 border-2 border-orange-400">
-              <thead>
-                  <tr className="divide-x divide-orange-400">
-                    <th className="w-10 h-10"></th>
-                    <th className="w-10 h-10">A</th>
-                    <th className="w-10 h-10">B</th>
-                    <th className="w-10 h-10">C</th>
-                    <th className="w-10 h-10">D</th>
-                    <th className="w-10 h-10">E</th>
-                    <th className="w-10 h-10">F</th>
-                    <th className="w-10 h-10">G</th>
-                    <th className="w-10 h-10">H</th>
-                    <th className="w-10 h-10">I</th>
-                    <th className="w-10 h-10">J</th>
-                  </tr>
-              </thead>
+              {tableHeader()}
               <tbody className="divide-y divide-orange-400">
                 {Array(10).fill().map((_, i) => (
                   <tr key={i} className="divide-x divide-orange-400">

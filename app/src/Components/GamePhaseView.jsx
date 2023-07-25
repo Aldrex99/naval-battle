@@ -5,6 +5,7 @@ import {useContext, useEffect, useState} from "react";
 import {colorByBoatType} from "../Utils/Divers.jsx";
 import {getAllCoordinates} from "../Utils/Coordinates.jsx";
 import {FireIcon} from "@heroicons/react/24/outline/index.js";
+import {tableHeader} from "../Utils/Table.jsx";
 
 
 export default function GamePhaseView() {
@@ -68,24 +69,10 @@ export default function GamePhaseView() {
   }, [userShoots]);
 
   return (
-    <div className="w-full h-full flex flex-row items-center justify-center">
-      <div id="user-part" className="w-1/2 h-full border-2 flex flex-col items-center justify-center">
+    <div className="w-full h-full flex lg:flex-row flex-col items-center justify-center">
+      <div id="user-part" className="lg:w-1/2 w-full h-full border-2 flex flex-col items-center justify-center">
         <table className="table-auto divide-y divide-orange-400 border-2 border-orange-400">
-          <thead>
-          <tr className="divide-x divide-orange-400">
-            <th className="w-10 h-10"></th>
-            <th className="w-10 h-10">A</th>
-            <th className="w-10 h-10">B</th>
-            <th className="w-10 h-10">C</th>
-            <th className="w-10 h-10">D</th>
-            <th className="w-10 h-10">E</th>
-            <th className="w-10 h-10">F</th>
-            <th className="w-10 h-10">G</th>
-            <th className="w-10 h-10">H</th>
-            <th className="w-10 h-10">I</th>
-            <th className="w-10 h-10">J</th>
-          </tr>
-          </thead>
+          {tableHeader()}
           <tbody className="divide-y divide-orange-400">
           {Array(10).fill().map((_, i) => (
             <tr key={i} className="divide-x divide-orange-400">
@@ -98,32 +85,17 @@ export default function GamePhaseView() {
           </tbody>
         </table>
       </div>
-      <div className="w-64 h-full border-2 border-green-500 flex flex-col justify-center">
+      <div className="lg:w-64 w-full lg:h-full h-32 border-2 border-green-500 flex flex-col justify-center">
         {userTurn === true ? (
-          <p>C'est à toi de jouer</p>
+          <p className="text-orange-400 font-semibold">C'est à toi de jouer</p>
         ) : (
-          <p>C'est à {opponent} de jouer</p>
-        )
-        }
+          <p className="text-cyan-400 font-semibold">C'est à {opponent} de jouer</p>
+        )}
 
       </div>
-      <div id="opponent-part" className="w-1/2 h-full border-2 border-red-500 flex flex-col items-center justify-center">
+      <div id="opponent-part" className="lg:w-1/2 w-full h-full border-2 border-red-500 flex flex-col items-center justify-center">
         <table className="table-auto divide-y divide-cyan-400 border-2 border-cyan-400">
-          <thead>
-          <tr className="divide-x divide-cyan-400">
-            <th className="w-10 h-10"></th>
-            <th className="w-10 h-10">A</th>
-            <th className="w-10 h-10">B</th>
-            <th className="w-10 h-10">C</th>
-            <th className="w-10 h-10">D</th>
-            <th className="w-10 h-10">E</th>
-            <th className="w-10 h-10">F</th>
-            <th className="w-10 h-10">G</th>
-            <th className="w-10 h-10">H</th>
-            <th className="w-10 h-10">I</th>
-            <th className="w-10 h-10">J</th>
-          </tr>
-          </thead>
+          {tableHeader(true)}
           <tbody className="divide-y divide-cyan-400">
           {Array(10).fill().map((_, i) => (
             <tr key={i} className="divide-x divide-cyan-400">
